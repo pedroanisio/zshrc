@@ -8,6 +8,7 @@
 #######################################################################
 
 export ZSH="$HOME/.oh-my-zsh"
+export ZSH_CUSTOM="$ZSH/custom"
 
 # Set theme and plugins BEFORE sourcing oh-my-zsh
 ZSH_THEME="apple"
@@ -91,7 +92,13 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 #######################################################################
-# 8. Final housekeeping
+# 8. direnv hook
+#######################################################################
+
+eval "$(direnv hook zsh)"
+
+#######################################################################
+# 9. Final housekeeping
 #######################################################################
 
 # Apply changes with: source ~/.zshrc
