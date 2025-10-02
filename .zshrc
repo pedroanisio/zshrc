@@ -4,23 +4,19 @@
 #######################################################################
 
 #######################################################################
-# 0. Bootstrap – Oh-My-Zsh and direnv setup
+# 0. Bootstrap – Oh-My-Zsh setup
 #######################################################################
 
 export ZSH="$HOME/.oh-my-zsh"
+
+# Set theme and plugins BEFORE sourcing oh-my-zsh
+ZSH_THEME="apple"
+plugins=(git)
+
 [[ -s "$ZSH/oh-my-zsh.sh" ]] && source "$ZSH/oh-my-zsh.sh"
 
-# Initialize direnv to load .envrc files automatically (optional)
-eval "$(direnv hook zsh)"
-
 #######################################################################
-# 1. Prompt & appearance
-#######################################################################
-
-ZSH_THEME="robbyrussell"
-
-#######################################################################
-# 2. History behavior
+# 1. History behavior
 #######################################################################
 
 setopt histignorealldups  # Drop older duplicate commands
@@ -30,13 +26,13 @@ SAVEHIST=5000
 HISTFILE="$HOME/.zsh_history"
 
 #######################################################################
-# 3. Key bindings
+# 2. Key bindings
 #######################################################################
 
 bindkey -e
 
 #######################################################################
-# 4. Completion system
+# 3. Completion system
 #######################################################################
 
 autoload -Uz compinit && compinit
@@ -54,18 +50,18 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 #######################################################################
-# 5. Path & toolchain tweaks
+# 4. Path & toolchain tweaks
 #######################################################################
 
 export PNPM_HOME="$HOME/.local/share/pnpm"
 export PATH="$HOME/code/review/_devtools:$PNPM_HOME:$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH"
 
 #######################################################################
-# 6. Aliases
+# 5. Aliases
 #######################################################################
 
 # tree respects .gitignore
-alias tree='tree --gitignore'
+alias tree='clear; pwd; tree --gitignore'
 
 # Better docker ps view
 alias dps='docker ps --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}\t{{.Networks}}"'
@@ -77,7 +73,7 @@ alias cc='clear; cat'
 # alias rm='trash-put'
 
 #######################################################################
-# 7. Miscellaneous tweaks
+# 6. Miscellaneous tweaks
 #######################################################################
 
 setopt correctall
@@ -87,13 +83,7 @@ preexec() { timer=${timer:-$SECONDS}; }
 precmd() { [[ $timer ]] && printf '\e[90m# took %ds\e[0m\n' $((SECONDS-timer)); unset timer; }
 
 #######################################################################
-# 8. Oh-My-Zsh plugins
-#######################################################################
-
-plugins=(git)
-
-#######################################################################
-# 9. Node Version Manager (from original .zshrc)
+# 7. Node Version Manager
 #######################################################################
 
 export NVM_DIR="$HOME/.nvm"
@@ -101,7 +91,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
 #######################################################################
-# 10. Final housekeeping
+# 8. Final housekeeping
 #######################################################################
 
 # Apply changes with: source ~/.zshrc
