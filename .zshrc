@@ -1,3 +1,4 @@
+➜  ~ cat .zshrc 
 #######################################################################
 # ~/.zshrc – Professional Zsh Configuration
 # Author: Generated for Dell G15 Ubuntu setup
@@ -15,8 +16,8 @@
 export ZSH="$HOME/.oh-my-zsh"
 export ZSH_CUSTOM="$ZSH/custom"
 
-ZSH_THEME="apple"
-plugins=(git)
+ZSH_THEME="robbyrussell"
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 
 # Disable Oh-My-Zsh auto-update prompts (update manually)
 zstyle ':omz:update' mode disabled
@@ -177,9 +178,16 @@ if [[ -d "$NVM_DIR" ]]; then
   yarn() { _nvm_lazy_load; yarn "$@"; }
 fi
 
+export HOST_SLUG=$(hostname | tr '[:upper:]' '[:lower:]')
 #######################################################################
 # 9. Aliases
 #######################################################################
+
+alias sync-home="rclone bisync /$HOME onedrv:/host/\$HOST_SLUG/\$USER \
+  --exclude-from /$HOME/\.config/rclone/exclude-home.txt \
+  --progress \
+  --max-delete 100"
+
 # Navigation
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -243,6 +251,7 @@ alias treeg='tree --gitignore 2>/dev/null || tree'
 alias c='clear'
 alias cc='clear; cat'
 alias cl='clear; ls'
+
 
 #######################################################################
 # 10. Functions
